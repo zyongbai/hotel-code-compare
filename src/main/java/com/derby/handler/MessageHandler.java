@@ -1,15 +1,20 @@
 package com.derby.handler;
 
+import java.io.File;
 import java.util.Map;
 import java.util.List;
 import java.util.HashMap;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map.Entry;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.math.BigDecimal;
+import java.io.BufferedReader;
 import com.derby.enums.EnvType;
 import com.derby.entity.Message;
 import com.derby.util.SystemMessage;
+import java.io.FileNotFoundException;
 import java.time.temporal.ChronoUnit;
 import com.derby.entity.CompareResult;
 import java.time.format.DateTimeFormatter;
@@ -260,6 +265,33 @@ public class MessageHandler {
 		}
 		
 		return compareResultMap;
+	}
+	
+	/**
+	 * 从csv文件中获取hotelCode
+	 * @return
+	 */
+	public List<String> getHotelCodeFromCSV() {
+		List<String> list = new ArrayList<String>();
+		
+		String path = MessageHandler.class.getResource("/").getPath();
+		File file = new File(path, "hotelCode/migrate_to_dswitch_hotel_info.csv");
+		
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(file));
+			br.readLine();
+			String readStr = "";
+			while ((readStr = br.readLine()) != null) {
+				list.add("MAR-" + readStr.split(",")[2]);
+			}
+			br.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return list;
 	}
 	
 }

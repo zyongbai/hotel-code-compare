@@ -2,7 +2,6 @@ package com.derby;
 
 import java.util.Map;
 import java.util.List;
-import java.util.Arrays;
 import com.derby.entity.CompareResult;
 import com.derby.entity.ResultMessage;
 import com.derby.handler.MessageHandler;
@@ -17,7 +16,10 @@ import com.derby.concurrent.forkjoin.MessageForkJoinTask;
  */
 public class Main {
 	public static void main(String[] args) {
-		List<String> hotelCodeList = Arrays.asList("STAR-1", "STAR-2", "STAR-3", "STAR-4", "STAR-5");
+		long start = System.currentTimeMillis();
+		
+		MessageHandler handler = new MessageHandler();
+		List<String> hotelCodeList = handler.getHotelCodeFromCSV();
 		
 		ForkJoinPool forkJoinPool = new ForkJoinPool();
 		MessageForkJoinTask messageForkJoinTask = new MessageForkJoinTask(hotelCodeList, 0, hotelCodeList.size());
@@ -38,15 +40,18 @@ public class Main {
 		} while (testResultSize != hotelCodeList.size() || onlineResultSize != hotelCodeList.size());
 		
 		System.out.println("test size:" + ResultMessage.getInstance().getTestResultSize());
-		System.out.println("test result:" + ResultMessage.getInstance().getResultFromTest());
+//		System.out.println("test result:" + ResultMessage.getInstance().getResultFromTest());
 		System.out.println("online size:" + ResultMessage.getInstance().getOnlineResultSize());
-		System.out.println("online result:" + ResultMessage.getInstance().getResultFromOnline());
+//		System.out.println("online result:" + ResultMessage.getInstance().getResultFromOnline());
 		
 		MessageHandler messageHandler = new MessageHandler();
 		Map<String, List<CompareResult>> result = messageHandler.compareTestAndOnline(ResultMessage.getInstance().getResultFromTest(), 
 																					  ResultMessage.getInstance().getResultFromOnline());
 		
 		System.out.println("compare different size:" + result.size());
+		
+		long end = System.currentTimeMillis();
+		System.out.println("∫ƒ ±:" + (end - start) + "∫¡√Î;" + (end - start) * 1.0 / 1000 + "√Î;" + (end - start) * 1.0 / 1000 / 60 + "∑÷÷”");
 		
 	}
 }
