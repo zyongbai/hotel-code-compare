@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<HotelRateList CheckIndate="2018-01-12" CheckOutDate="2018-01-13" Rooms="1" Guests="2">
+	<HotelRate HotelCode="PARKHOTEL-26663" HotelName="Grand Park Orchard" Address="270 Orchard Road,Singapore 238857">
+		<RoomRate RoomTypeCode="DK" RoomTypeName="Deluxe Room" RatePlanCode="BAR" TotalBaseRate="221.00" TotalOtherFees="0.00" TotalTax="39.12" DailyBaseRate="221.00" RateType="default"></RoomRate>
+		<RoomRate RoomTypeCode="DK2" RoomTypeName="Deluxe Room2" RatePlanCode="BAR2" TotalBaseRate="222.00" TotalOtherFees="1.00" TotalTax="38.12" DailyBaseRate="222.00" RateType="default"></RoomRate>
+	</HotelRate>
+</HotelRateList>
