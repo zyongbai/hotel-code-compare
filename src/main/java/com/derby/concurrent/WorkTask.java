@@ -41,7 +41,7 @@ public class WorkTask implements Runnable {
 		}
 		
 		// Êý¾ÝÈë¿â
-//		DBQueue.getInstance().offer(resultMap);
+		DBQueue.getInstance().offer(resultMap);
 		
 		countDownLatch.countDown();
 	}

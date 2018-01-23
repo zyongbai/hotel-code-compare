@@ -6,22 +6,22 @@ import com.derby.enums.EnvType;
 @Data
 public class Message implements Cloneable {
 	private String hotelCode;
+	private String roomTypeCode;
+	private String ratePlanCode;
 	private String account;
 	private String checkInDate;
 	private String checkOutDate;
 	private String rooms;
 	private String guests;
-	private String enableSmartcache;
-	private String disableSmartengine;
 	private String totalBaseRate;
 	private String totalOtherFees;
 	private String totalTax;
-	private String dailyBaseRate;
-	private String rateType;
 	private EnvType envType;
 	private String url;
-	private String roomTypeCode;
-	private String ratePlanCode;
+	private String enableSmartcache;
+	private String disableSmartengine;
+	private String dailyBaseRate;
+	private String rateType;
 	
 	/**
 	 * ¿ËÂ¡
@@ -44,6 +44,8 @@ public class Message implements Cloneable {
 		
 		description.append("Message[");
 		description.append("hotelCode:").append(hotelCode).append(";");
+		description.append("roomTypeCode:").append(roomTypeCode).append(";");
+		description.append("ratePlanCode:").append(ratePlanCode).append(";");
 		description.append("account:").append(account).append(";");
 		description.append("checkInDate:").append(checkInDate).append(";");
 		description.append("checkOutDate:").append(checkOutDate).append(";");
