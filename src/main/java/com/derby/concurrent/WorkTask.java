@@ -27,7 +27,7 @@ public class WorkTask implements Runnable {
 
 	@Override
 	public void run() {
-		System.out.println(Thread.currentThread() + "&Message:" + this.message);
+		System.out.println(Thread.currentThread() + "" + this.message);
 		
 		HttpRequestHandler handler = new HttpRequestHandler();
 		Map<String, List<Message>> resultMap = handler.getRequest(message);

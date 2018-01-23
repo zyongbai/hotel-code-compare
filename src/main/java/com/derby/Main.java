@@ -37,6 +37,9 @@ public class Main {
 			
 			testResultSize = ResultMessage.getInstance().getTestResultSize();
 			onlineResultSize = ResultMessage.getInstance().getOnlineResultSize();
+			
+			System.out.println("test size:" + testResultSize);
+			System.out.println("online size:" + onlineResultSize);
 		} while (testResultSize != hotelCodeList.size() || onlineResultSize != hotelCodeList.size());
 		
 		System.out.println("test size:" + ResultMessage.getInstance().getTestResultSize());

@@ -35,7 +35,7 @@ public class Dom4jXml {
 			
 			Element root = document.getRootElement();
 			// 获取节点HotelRateList的相关属性
-			String checkIndate = root.attributeValue("CheckIndate");
+			String checkIndate = root.attributeValue("CheckInDate");
 			String checkOutDate = root.attributeValue("CheckOutDate");
 			String rooms = root.attributeValue("Rooms");
 			String guests = root.attributeValue("Guests");
