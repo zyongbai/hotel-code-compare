@@ -5,11 +5,13 @@ import java.util.Map;
 import java.util.List;
 import java.util.HashMap;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Map.Entry;
 import java.time.LocalDate;
+import java.util.Map.Entry;
+import java.util.ArrayList;
 import java.math.BigDecimal;
+import java.io.BufferedWriter;
 import java.io.BufferedReader;
 import com.derby.enums.EnvType;
 import com.derby.entity.Message;
@@ -144,8 +146,8 @@ public class MessageHandler {
 					
 					CompareResult compareResult = new CompareResult();
 					compareResult.setHotelCode(firstMessage.getHotelCode());
-					compareResult.setRoomTypeCode(firstMessage.getRoomTypeCode());
-					compareResult.setRatePlanCode(firstMessage.getRatePlanCode());
+					compareResult.setRoomTypeCode(firstMessage.getRoomTypeCode() + "(online)");
+					compareResult.setRatePlanCode(firstMessage.getRatePlanCode() + "(online)");
 					compareResult.setAccount(firstMessage.getAccount());
 					compareResult.setCheckInDate(firstMessage.getCheckInDate());
 					compareResult.setCheckOutDate(firstMessage.getCheckOutDate());
@@ -177,8 +179,8 @@ public class MessageHandler {
 					
 					CompareResult compareResult = new CompareResult();
 					compareResult.setHotelCode(firstMessage.getHotelCode());
-					compareResult.setRoomTypeCode(firstMessage.getRoomTypeCode());
-					compareResult.setRatePlanCode(firstMessage.getRatePlanCode());
+					compareResult.setRoomTypeCode(firstMessage.getRoomTypeCode() + "(test)");
+					compareResult.setRatePlanCode(firstMessage.getRatePlanCode() + "(test)");
 					compareResult.setAccount(firstMessage.getAccount());
 					compareResult.setCheckInDate(firstMessage.getCheckInDate());
 					compareResult.setCheckOutDate(firstMessage.getCheckOutDate());
@@ -292,6 +294,50 @@ public class MessageHandler {
 		}
 		
 		return list;
+	}
+	
+	/**
+	 * 将比较结果不同的数据写入csv文件
+	 */
+	public void writeDifference2CSV(Map<String, List<CompareResult>> result) {
+		String header = "hotelCode,roomTypeCode,ratePlanCode,account,checkInDate,checkOutDate,guests,rooms,testURL,prodURL,testResult,detail";
+		String path = MessageHandler.class.getResource("/").getPath();
+		File file = new File(path, "hotelCode/checkDifferent_marriott.csv");
+		try {
+			BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+			bw.write(header);
+			bw.newLine();
+			bw.flush();
+			
+			for (Entry<String, List<CompareResult>> entry : result.entrySet()) {
+				List<CompareResult> list = entry.getValue();
+				for (int i = 0; i < list.size(); i++) {
+					CompareResult compareResult = list.get(i);
+					
+					StringBuilder sb = new StringBuilder();
+					sb.append(compareResult.getHotelCode() + ",");
+					sb.append(compareResult.getRoomTypeCode() + ",");
+					sb.append(compareResult.getRatePlanCode() + ",");
+					sb.append(compareResult.getAccount() + ",");
+					sb.append(compareResult.getCheckInDate() + ",");
+					sb.append(compareResult.getCheckOutDate() + ",");
+					sb.append(compareResult.getGuests() + ",");
+					sb.append(compareResult.getRooms() + ",");
+					sb.append(compareResult.getTestURL() + ",");
+					sb.append(compareResult.getProdURL() + ",");
+					sb.append(compareResult.getTestResult() + ",");
+					sb.append(compareResult.getDetail() + ",");
+					
+					bw.write(sb.toString());
+					bw.newLine();
+					bw.flush();
+				}
+			}
+			
+			bw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 }

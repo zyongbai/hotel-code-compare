@@ -18,8 +18,8 @@ public class Main {
 	public static void main(String[] args) {
 		long start = System.currentTimeMillis();
 		
-		MessageHandler handler = new MessageHandler();
-		List<String> hotelCodeList = handler.getHotelCodeFromCSV();
+		MessageHandler messageHandler = new MessageHandler();
+		List<String> hotelCodeList = messageHandler.getHotelCodeFromCSV();
 		
 		ForkJoinPool forkJoinPool = new ForkJoinPool();
 		MessageForkJoinTask messageForkJoinTask = new MessageForkJoinTask(hotelCodeList, 0, hotelCodeList.size());
@@ -44,11 +44,12 @@ public class Main {
 		System.out.println("online size:" + ResultMessage.getInstance().getOnlineResultSize());
 //		System.out.println("online result:" + ResultMessage.getInstance().getResultFromOnline());
 		
-		MessageHandler messageHandler = new MessageHandler();
 		Map<String, List<CompareResult>> result = messageHandler.compareTestAndOnline(ResultMessage.getInstance().getResultFromTest(), 
 																					  ResultMessage.getInstance().getResultFromOnline());
-		
 		System.out.println("compare different size:" + result.size());
+		
+		// 不同比较结果写入文件
+		messageHandler.writeDifference2CSV(result);
 		
 		long end = System.currentTimeMillis();
 		System.out.println("耗时:" + (end - start) + "毫秒;" + (end - start) * 1.0 / 1000 + "秒;" + (end - start) * 1.0 / 1000 / 60 + "分钟");
